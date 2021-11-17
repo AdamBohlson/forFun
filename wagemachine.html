@@ -1,0 +1,647 @@
+<html>
+<head>
+<style>
+h1 {text-align: center;}
+p {text-align: center;}
+</style>
+</head>
+<body>
+
+<hr width="500" size="10" noshade>
+
+<h1 style="text=aline:center">The Minimum Wage Machine</h1>
+
+<hr width="500" size="10" noshade>
+
+<p>
+	<label for="state">State:</label>
+	<select id="state" value="Custom Value" onchange="update(this.state)">
+		<option state="Custom Value">Custom Value</option>
+		<option state="Alabama">Alabama</option>
+		<option state="Alaska">Alaska</option>
+		<option state="Arizona">Arizona</option>
+		<option state="Arkansas">Arkansas</option>
+		<option state="California">California</option>
+		<option state="Colorado">Colorado</option>
+		<option state="Connecticut">Connecticut</option>
+		<option state="Delaware">Delaware</option>
+		<option state="Florida">Florida</option>
+		<option state="Georgia">Georgia</option>
+		<option state="Hawaii">Hawaii</option>
+		<option state="Idaho">Idaho</option>
+		<option state="Illinois">Illinois</option>
+		<option state="Indiana">Indiana</option>
+		<option state="Iowa">Iowa</option>
+		<option state="Kansas">Kansas</option>
+		<option state="Kentucky">Kentucky</option>
+		<option state="Louisiana">Louisiana</option>
+		<option state="Maine">Maine</option>
+		<option state="Maryland">Maryland</option>
+		<option state="Massachusets">Massachusetts</option>
+		<option state="Michigan">Michigan</option>
+		<option state="Minnesota">Minnesota</option>
+		<option state="Mississippi">Mississippi</option>
+		<option state="Missouri">Missouri</option>
+		<option state="Montana">Montana</option>
+		<option state="Nebraska">Nebraska</option>
+		<option state="Nevada">Nevada</option>
+		<option state="New Hampshire">New Hampshire</option>
+		<option state="New Jersey">New Jersey</option>
+		<option state="New Mexico">New Mexico</option>
+		<option state="New York">New York</option>
+		<option state="North Carolina">North Carolina</option>
+		<option state="North Dakota">North Dakota</option>
+		<option state="Ohio">Ohio</option>
+		<option state="Oklahoma">Oklahoma</option>
+		<option state="Oregon">Oregon</option>
+		<option state="Pennsylvania">Pennsylvania</option>
+		<option state="Rhode Island">Rhode Island</option>
+		<option state="South Carolina">South Carolina</option>
+		<option state="Tennessee">Tennessee</option>
+		<option state="Texas">Texas</option>
+		<option state="Utah">Utah</option>
+		<option state="Vermont">Vermont</option>
+		<option state="Virginia">Virginia</option>
+		<option state="Washington">Washington</option>
+		<option state="West Virginia">West Virginia</option>
+		<option state="Wisconsin">Wisconsin</option>
+		<option state="Wyoming">Wyoming</option>
+	</select>
+	<label for="wage">Hourly Wage (in USD):</label>
+	<input type="text" id="wage" value="7.25" onchange="updateWage()"/>
+</p>
+
+<p>
+	<input type="button" id="work" style="width:500px;height:150px;font-size:80px" value="Work" onclick="work()"/>
+</p>
+
+<p id="wageEarned">Wage earned so far: $0.00</p>
+
+<p>
+	<input type="button" id="reset" value="Reset Wealth" onclick="resetWealth()"/>
+</p>
+
+<hr width="500" size="10" noshade>
+
+<p id="question">How many of the following items can you afford in the United States?</p>
+<p id="house">Median Value Houses: 0</p>
+<p id="rent">Median Monthly Rent Payments: 0</p>
+<p id="pizza">Pepperoni Pizzas: 0</p>
+<p id="gas">Gallons of Gasoline: 0</p>
+<p id="milk">Gallons of Milk: 0</p>
+<p id="bread">Loaves of Bread: 0</p>
+
+<hr width="500" size="10" noshade>
+
+<script>
+	var state = document.getElementById("state");
+	var wage = document.getElementById("wage");
+	var wageEarned = document.getElementById("wageEarned");
+	var question = document.getElementById("question");
+	
+	var house = document.getElementById("house");
+	var rent = document.getElementById("rent");
+	var pizza = document.getElementById("pizza");
+	var gas = document.getElementById("gas");
+	var milk = document.getElementById("milk");
+	var bread = document.getElementById("bread");
+	
+	var house$ = 0;
+	var rent$ = 0;
+	var pizza$ = 0;
+	var gas$ = 0;
+	var milk$ = 0;
+	var bread$ = 0;
+	
+	var wealth = 0;
+	let working = false;
+	timer = setInterval(updateWealth, 100);
+	update(state);
+	
+	function update(state)
+	{
+		state = document.getElementById("state");
+		switch (state.value)
+		{
+			case "Custom Value":
+				question.innerHTML = "How many of the following items can you afford in the United States?";
+				wage = 0;
+				house$ = 329000;
+				rent$ = 997.68;
+				pizza$ = 11;
+				gas$ = 3.415;
+				milk$ = 2.57;
+				bread$ = 1.04;
+				break;
+			case "Alabama":
+				wage = 7.25;
+				house$ = 138975;
+				rent$ = 792;
+				pizza$ = 14.77;
+				gas$ = 3.188;
+				milk$ = 3.75;
+				bread$ = 0.88;
+				break;
+			case "Alaska":
+				wage = 10.34;
+				house$ = 300889;
+				rent$ = 1244;
+				pizza$ = 13.89;
+				gas$ = 3.712;
+				milk$ = 3.78;
+				bread$ = 1.98;
+				break;
+			case "Arizona":
+				wage = 12.15;
+				house$ = 268765;
+				rent$ = 1052;
+				pizza$ = 12.33;
+				gas$ = 3.662;
+				milk$ = 1.98;
+				bread$ = 0.88;
+				break;
+			case "Arkansas":
+				wage = 11.00;
+				house$ = 128101;
+				rent$ = 745;
+				pizza$ = 12.56;
+				gas$ = 3.056;
+				milk$ = 2.99;
+				bread$ = 0.88;
+				break;
+			case "California":
+				wage = 14.00;
+				house$ = 554886;
+				rent$ = 1503;
+				pizza$ = 10.45;
+				gas$ = 4.682;
+				milk$ = 2.69;
+				bread$ = 0.84;
+				break;
+			case "Colorado":
+				wage = 12.32;
+				house$ = 397820;
+				rent$ = 1271;
+				pizza$ = 11.92;
+				gas$ = 3.491;
+				milk$ = 2.29;
+				bread$ = 1.38;
+				break;
+			case "Connecticut":
+				wage = 13.00;
+				house$ = 255555;
+				rent$ = 1180;
+				pizza$ = 9.62;
+				gas$ = 3.544;
+				milk$ = 1.35;
+				bread$ = 0.88;
+				break;
+			case "Delaware":
+				wage = 9.25;
+				house$ = 254108;
+				rent$ = 1130;
+				pizza$ = 11.52;
+				gas$ = 3.316;
+				milk$ = 3.19;
+				bread$ = 0.88;
+				break;
+			case "Florida":
+				wage = 10.00;
+				house$ = 245169;
+				rent$ = 1175;
+				pizza$ = 10.65;
+				gas$ = 3.264;
+				milk$ = 3.07;
+				bread$ = 0.88;
+				break;
+			case "Georgia":
+				wage = 7.25;
+				house$ = 201294;
+				rent$ = 1006;
+				pizza$ = 12.59;
+				gas$ = 3.256;
+				milk$ = 2.69;
+				bread$ = 0.88;
+				break;
+			case "Hawaii":
+				wage = 10.10;
+				house$ = 636451;
+				rent$ = 1617;
+				pizza$ = 14.25;
+				gas$ = 4.342;
+				milk$ = 4.69;
+				bread$ = 3.24;
+				break;
+			case "Idaho":
+				wage = 7.25;
+				house$ = 285982;
+				rent$ = 853;
+				pizza$ = 12.45;
+				gas$ = 3.694;
+				milk$ = 1.69;
+				bread$ = 0.88;
+				break;
+			case "Illinois":
+				wage = 11.00;
+				house$ = 202675;
+				rent$ = 1010;
+				pizza$ = 11.61;
+				gas$ = 3.563;
+				milk$ = 0.93;
+				bread$ = 0.88;
+				break;
+			case "Indiana":
+				wage = 7.25;
+				house$ = 155640;
+				rent$ = 826;
+				pizza$ = 11.39;
+				gas$ = 3.360;
+				milk$ = 1.49;
+				bread$ = 0.88;
+				break;
+			case "Iowa":
+				wage = 7.25;
+				house$ = 152885;
+				rent$ = 789;
+				pizza$ = 15.38;
+				gas$ = 3.166;
+				milk$ = 1.92;
+				bread$ = 1.28;
+				break;
+			case "Kansas":
+				wage = 7.25;
+				house$ = 150657;
+				rent$ = 850;
+				pizza$ = 14.96;
+				gas$ = 3.102;
+				milk$ = 1.99;
+				bread$ = 0.84;
+				break;
+			case "Kentucky":
+				wage = 7.25;
+				house$ = 146871;
+				rent$ = 763;
+				pizza$ = 14.16;
+				gas$ = 3.104;
+				milk$ = 2.19;
+				bread$ = 0.88;
+				break;
+			case "Louisiana":
+				wage = 7.25;
+				house$ = 166565;
+				rent$ = 866;
+				pizza$ = 13.14;
+				gas$ = 3.149;
+				milk$ = 3.65;
+				bread$ = 1.38;
+				break;
+			case "Maine":
+				wage = 12.15;
+				house$ = 242316;
+				rent$ = 853;
+				pizza$ = 13.17;
+				gas$ = 3.435;
+				milk$ = 3.48;
+				bread$ = 1.38;
+				break;
+			case "Maryland":
+				wage = 11.75;
+				house$ = 308041;
+				rent$ = 1392;
+				pizza$ = 12.05;
+				gas$ = 3.356;
+				milk$ = 2.25;
+				bread$ = 0.88;
+				break;
+			case "Massachusetts":
+				wage = 13.50;
+				house$ = 422856;
+				rent$ = 1282;
+				pizza$ = 9.48;
+				gas$ = 3.413;
+				milk$ = 2.19;
+				bread$ = 1.38;
+				break;
+			case "Michigan":
+				wage = 9.65;
+				house$ = 173277;
+				rent$ = 871;
+				pizza$ = 10.67;
+				gas$ = 3.395;
+				milk$ = 1.89;
+				bread$ = 0.88;
+				break;
+			case "Minnesota":
+				wage = 10.08;
+				house$ = 256857;
+				rent$ = 977;
+				pizza$ = 13.74;
+				gas$ = 3.176;
+				milk$ = 2.79;
+				bread$ = 0.84;
+				break;
+			case "Mississippi":
+				wage = 7.25;
+				house$ = 126502;
+				rent$ = 780;
+				pizza$ = 12.83;
+				gas$ = 3.080;
+				milk$ = 3.59;
+				bread$ = 0.88;
+				break;
+			case "Missouri":
+				wage = 10.30;
+				house$ = 162464;
+				rent$ = 830;
+				pizza$ = 12.21;
+				gas$ = 3.094;
+				milk$ = 2.27;
+				bread$ = 0.88;
+				break;
+			case "Montana":
+				wage = 8.75;
+				house$ = 277801;
+				rent$ = 977;
+				pizza$ = 12.14;
+				gas$ = 3.409;
+				milk$ = 2.98;
+				bread$ = 0.88;
+				break;
+			case "Nebraska":
+				wage = 9.00;
+				house$ = 175884
+				rent$ = 833;
+				pizza$ = 13.39;
+				gas$ = 3.201;
+				milk$ = 3.13;
+				bread$ = 1.38;
+				break;
+			case "Nevada":
+				wage = 9.75;
+				house$ = 301753;
+				rent$ = 1107;
+				pizza$ = 11.56;
+				gas$ = 3.974;
+				milk$ = 2.99;
+				bread$ = 0.84;
+				break;
+			case "New Hampshire":
+				wage = 7.25;
+				house$ = 290163;
+				rent$ = 1111;
+				pizza$ = 12.17;
+				gas$ = 3.366;
+				milk$ = 2.69;
+				bread$ = 1.38;
+				break;
+			case "New Jersey":
+				wage = 12.00;
+				house$ = 335607;
+				rent$ = 1334;
+				pizza$ = 9.98;
+				gas$ = 3.451;
+				milk$ = 2.83;
+				bread$ = 0.67;
+				break;
+			case "New Mexico":
+				wage = 10.50;
+				house$ = 203675;
+				rent$ = 844;
+				pizza$ = 12.70;
+				gas$ = 3.362;
+				milk$ = 2.09;
+				bread$ = 1.38;
+				break;
+			case "New York":
+				wage = 12.50;
+				house$ = 321934;
+				rent$ = 1280;
+				pizza$ = 9.20;
+				gas$ = 3.560;
+				milk$ = 1.97;
+				bread$ = 0.88;
+				break;
+			case "North Carolina":
+				wage = 7.25;
+				house$ = 202215;
+				rent$ = 907;
+				pizza$ = 12.27;
+				gas$ = 3.225;
+				milk$ = 2.60;
+				bread$ = 0.88;
+				break;
+			case "North Dakota":
+				wage = 7.25;
+				house$ = 235012;
+				rent$ = 826;
+				pizza$ = 10.98;
+				gas$ = 3.206;
+				milk$ = 2.93;
+				bread$ = 0.84;
+				break;
+			case "Ohio":
+				wage = 8.80;
+				house$ = 150374;
+				rent$ = 808;
+				pizza$ = 10.99;
+				gas$ = 3.263;
+				milk$ = 1.48;
+				bread$ = 0.98;
+				break;
+			case "Oklahoma":
+				wage = 7.25;
+				house$ = 128934;
+				rent$ = 810;
+				pizza$ = 15.56;
+				gas$ = 2.998;
+				milk$ = 2.59;
+				bread$ = 0.88;
+				break;
+			case "Oregon":
+				wage = 12.00;
+				house$ = 361970;
+				rent$ = 1110;
+				pizza$ = 13.30;
+				gas$ = 3.782;
+				milk$ = 2.47;
+				bread$ = 0.84;
+				break;
+			case "Pennsylvania":
+				wage = 7.25;
+				house$ = 194603;
+				rent$ = 938;
+				pizza$ = 8.08;
+				gas$ = 3.601;
+				milk$ = 3.40;
+				bread$ = 0.88;
+				break;
+			case "Rhode Island":
+				wage = 11.50;
+				house$ = 300808;
+				rent$ = 1004;
+				pizza$ = 9.69;
+				gas$ = 3.419;
+				milk$ = 2.69;
+				bread$ = 0.88;
+				break;
+			case "South Carolina":
+				wage = 7.25;
+				house$ = 185749;
+				rent$ = 894;
+				pizza$ = 9.40;
+				gas$ = 3.134;
+				milk$ = 2.39;
+				bread$ = 0.88;
+				break;
+			case "South Dakota":
+				wage = 9.45;
+				house$ = 205567;
+				rent$ = 747;
+				pizza$ = 12.32;
+				gas$ = 3.292;
+				milk$ = 2.99;
+				bread$ = 1.38;
+				break;
+			case "Tennessee":
+				wage = 7.25;
+				house$ = 185992;
+				rent$ = 869;
+				pizza$ = 8.70;
+				gas$ = 3.133;
+				milk$ = 2.59;
+				bread$ = 0.98;
+				break;
+			case "Texas":
+				wage = 7.25;
+				house$ = 207301;
+				rent$ = 1045;
+				pizza$ = 9.71;
+				gas$ = 3.051;
+				milk$ = 3.48;
+				bread$ = 0.88;
+				break;
+			case "Utah":
+				wage = 7.25;
+				house$ = 348374;
+				rent$ = 1037;
+				pizza$ = 6.49;
+				gas$ = 3.704;
+				milk$ = 2.18;
+				bread$ = 0.88;
+				break;
+			case "Vermont":
+				wage = 7.25;
+				house$ = 254234;
+				rent$ = 985;
+				pizza$ = 9.41;
+				gas$ = 3.437;
+				milk$ = 3.28;
+				bread$ = 0.88;
+				break;
+			case "Virginia":
+				wage = 9.50;
+				house$ = 285229;
+				rent$ = 1234;
+				pizza$ = 8.93;
+				gas$ = 3.277;
+				milk$ = 2.07;
+				bread$ = 0.88;
+				break;
+			case "Washington":
+				wage = 13.69;
+				house$ = 409228;
+				rent$ = 1285;
+				pizza$ = 11.60;
+				gas$ = 3.874;
+				milk$ = 1.97;
+				bread$ = 0.84;
+				break;
+			case "West Virginia":
+				wage = 8.75;
+				house$ = 108236;
+				rent$ = 725;
+				pizza$ = 7.70;
+				gas$ = 3.340;
+				milk$ = 1.99;
+				bread$ = 0.88;
+				break;
+			case "Wisconsin":
+				wage = 7.25;
+				house$ = 202029;
+				rent$ = 856;
+				pizza$ = 10.08;
+				gas$ = 3.129;
+				milk$ = 1.89;
+				bread$ = 0.84;
+				break;
+			case "Wyoming":
+				wage = 7.25;
+				house$ = 250890;
+				rent$ = 855;
+				pizza$ = 12.72;
+				gas$ = 3.476;
+				milk$ = 1.99;
+				bread$ = 1.38;
+				break;
+			default:
+				wage = 7.25;
+				house$ = 329000;
+				rent$ = 997.68;
+				pizza$ = 11;
+				gas$ = 3.415;
+				milk$ = 2.57;
+				bread$ = 1.04;
+		}
+		if (state.value != "Custom Value") {question.innerHTML = "How many of the following items can you afford in " + state.value + "?";};
+		document.getElementById("wage").value = wage.toFixed(2);
+		updateWealth();
+	}
+	
+	function updateWage()
+	{
+		wage = document.getElementById("wage").value;
+	}
+	
+	function updateWealth()
+	{
+		if (working)
+		{
+			wealth += (wage/36000);
+		}
+		wageEarned.innerHTML = "Wage earned so far: $" + wealth.toFixed(2);
+		house.innerHTML = "Median Value Houses: " + Math.floor(wealth/house$) + " (" + (((wealth/house$) - Math.floor(wealth/house$)) * 100).toFixed(4) + "% to next)";
+		rent.innerHTML = "Median Monthly Rent Payments: " + Math.floor(wealth/rent$) + " (" + (((wealth/rent$) - Math.floor(wealth/rent$)) * 100).toFixed(4) + "% to next)";
+		pizza.innerHTML = "Pepperoni Pizzas: " + Math.floor(wealth/pizza$) + " (" + (((wealth/pizza$) - Math.floor(wealth/pizza$)) * 100).toFixed(4) + "% to next)";
+		gas.innerHTML = "Gallons of Gasoline: " + Math.floor(wealth/gas$) + " (" + (((wealth/gas$) - Math.floor(wealth/gas$)) * 100).toFixed(4) + "% to next)";
+		milk.innerHTML = "Gallons of Milk: " + Math.floor(wealth/milk$) + " (" + (((wealth/milk$) - Math.floor(wealth/milk$)) * 100).toFixed(4) + "% to next)";
+		bread.innerHTML = "Loaves of Bread: " + Math.floor(wealth/bread$) + " (" + (((wealth/bread$) - Math.floor(wealth/bread$)) * 100).toFixed(4) + "% to next)";
+	}
+	
+	function resetWealth()
+	{
+		wealth = 0;
+	}
+	
+	function work()
+	{
+		if (!working)
+		{
+			working = true;
+			to = setTimeout(notWork, 2500);
+		}
+		else
+		{
+			window.clearTimeout(to);
+			to = setTimeout(notWork, 2500);
+		}
+	}
+	
+	function notWork()
+	{
+		working = false;
+		alert("Please continue clicking to recieve your wage.");
+	}
+</script>
+
+</body>
+</html>
