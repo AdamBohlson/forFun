@@ -11,7 +11,7 @@ m::Send ᠮ
 n::Send ᠨ
 p::Send ᡦ
 w::Send ᠸ
-'::Send ᡨ
+t::Send ᡨ
 =::Send ᡃ
 ;Right control toggles script
 RCtrl::
